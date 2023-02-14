@@ -1,6 +1,8 @@
+import { config } from "dotenv";
+config();
+
 import express, {Request, Response} from "express";
 import mongoose from 'mongoose';
-
 import Deck from './models/deck';
 
 const PORT = 5000;
@@ -19,10 +21,7 @@ app.post("/decks", async (req: Request, res: Response) => {
 });
 
 mongoose.set('strictQuery', false);
-mongoose
-  .connect(
-  "mongodb+srv://flashcardsage:flashcardsage@cluster0.erlff2r.mongodb.net/?retryWrites=true&w=majority"
-  ).then(() => {
+mongoose.connect(process.env.MONGO_URL!).then(() => {
     console.log(`listening on port ${PORT}`);
     app.listen(PORT);
   });
